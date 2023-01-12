@@ -1,0 +1,87 @@
+<mat-form-field class="example-chip-list">
+<mat-chip-list #chipListCodeReviewer>
+  <mat-chip
+    *ngFor="let codeReviewer of codeReviewers;let indx=index;"
+    [selectable]="selectable"
+    [removable]="removable"
+    (removed)="removeCodeReviewer(codeReviewer,indx)"
+  >
+    {{codeReviewer.display_name}}
+    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+  </mat-chip>
+  <input
+    placeholder="New codeReviewer..."
+    #codeReviewerInput
+    [formControl]="codeReviewerCtrl"
+    [matAutocomplete]="autoCodeReviewer"
+    [matChipInputFor]="chipListCodeReviewer"
+    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+    [matChipInputAddOnBlur]="addOnBlur"
+    (matChipInputTokenEnd)="addCodeReviewer($event)"
+  />
+</mat-chip-list>
+<mat-autocomplete
+  #autoCodeReviewer="matAutocomplete"
+  (optionSelected)="selectedCodeReviewer($event)"
+>
+  <mat-option
+    *ngFor="let codeReviewer of filteredCodeReviewers | async"
+    [value]="codeReviewer"
+  >
+    {{codeReviewer.display_name}}
+  </mat-option>
+</mat-autocomplete>
+</mat-form-field>
+
+<pre>{{codeReviewers|json}}</pre>
+
+<div class="sm:w-140 flex flex-col sm:flex-row flex-0 col-span-4 sm:col-span-4">
+<div class="chip-input w-full font-extrabold tracking-tight ng-tns-c274-3859">
+  <mat-form-field
+    [floatLabel]="'always'"
+    appearance="fill"
+    class="example-chip-list w-full flex-0 mb-2"
+  >
+    <mat-label>Code Reviewer</mat-label>
+    <mat-chip-list #chipListCodeReviewer>
+      <input
+        placeholder="New codeReviewer..."
+        #codeReviewerInput
+        [formControl]="codeReviewerCtrl"
+        [matAutocomplete]="autoCodeReviewer"
+        [matChipInputFor]="chipListCodeReviewer"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        [matChipInputAddOnBlur]="addOnBlur"
+        (matChipInputTokenEnd)="addCodeReviewer($event)"
+        class="w-full"
+      />
+    </mat-chip-list>
+    <mat-autocomplete
+      #autoCodeReviewer="matAutocomplete"
+      (optionSelected)="selectedCodeReviewer($event)"
+    >
+      <mat-option
+        *ngFor="let codeReviewer of filteredCodeReviewers | async"
+        [value]="codeReviewer"
+      >
+        {{codeReviewer.display_name}}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-chip-list
+      #chipListCodeReviewer
+      class="mb-2"
+      aria-label="repository selection"
+    >
+      <mat-chip
+        *ngFor="let codeReviewer of codeReviewers;let indx=index;"
+        [selectable]="selectable"
+        [removable]="removable"
+        (removed)="removeCodeReviewer(codeReviewer,indx)"
+      >
+        {{codeReviewer.display_name}}
+        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+  </mat-form-field>
+</div>
+</div>
